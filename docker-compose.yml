@@ -1,10 +1,28 @@
 version: '3.7'
 
 services:
-  web:
+  web-1:
     ipc: host
     build:
       context: .
     image: web-demo
     ports:
       - 1111:1111
+    networks:
+      - net-1
+
+  web-2:
+    ipc: host
+    build:
+      context: .
+    image: web-demo
+    ports:
+      - 1112:1111
+    networks:
+      - net-2
+
+networks:
+  net-1:
+    driver: bridge
+  net-2:
+    driver: bridge
