@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  web:
+    ipc: host
+    build:
+      context: .
+    image: web-demo
+    ports:
+      - 1111:1111
