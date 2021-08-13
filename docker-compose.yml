@@ -2,7 +2,6 @@ version: '3.7'
 
 services:
   web-1:
-    ipc: host
     build:
       context: .
     image: web-demo
@@ -11,8 +10,17 @@ services:
     networks:
       - net-1
 
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 443:443
+    networks:
+      - net-1
+    depends_on:
+      - web-1
+
   web-2:
-    ipc: host
     build:
       context: .
     image: web-demo
