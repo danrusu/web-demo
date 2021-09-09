@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  web:
+  web-1:
     build:
       context: .
     image: web-demo
@@ -10,7 +10,7 @@ services:
     ports:
       - 1111
 
-  nginx:
+  nginx-1:
     build:
       context: ./nginx
     networks:
@@ -18,16 +18,22 @@ services:
     ports:
       - 443
     depends_on:
-      - web
+      - web-1
+    links:
+      - 'web-1:web'
 
   cypress-1:
     build:
       context: .
       dockerfile: CypressDockerfile 
     depends_on:
-      - nginx 
+      - nginx-1
     networks:
       - net-1
+    links:
+      - 'nginx-1:nginx'
+
+######################################
 
   nginx-2:
     build:
