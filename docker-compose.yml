@@ -1,33 +1,65 @@
 version: '3.7'
 
 services:
-  web-1:
+  web:
     build:
       context: .
     image: web-demo
-    ports:
-      - 1111:1111
     networks:
       - net-1
+    ports:
+      - 1111
 
   nginx:
     build:
       context: ./nginx
-    ports:
-      - 443:443
     networks:
       - net-1
+    ports:
+      - 443
     depends_on:
-      - web-1
+      - web
+
+  cypress-1:
+    build:
+      context: .
+      dockerfile: CypressDockerfile 
+    depends_on:
+      - nginx 
+    networks:
+      - net-1
+
+  nginx-2:
+    build:
+      context: ./nginx
+    ports:
+      - 443
+    networks:
+      - net-2
+    depends_on:
+      - web-2
+    links:
+      - 'web-2:web'
 
   web-2:
     build:
       context: .
     image: web-demo
     ports:
-      - 1112:1111
+      - 1111
     networks:
       - net-2
+
+  cypress-2:
+    build:
+      context: .
+      dockerfile: CypressDockerfile 
+    depends_on:
+      - nginx-2 
+    networks:
+      - net-2
+    links:
+      - 'nginx-2:nginx'
 
 networks:
   net-1:

@@ -8,6 +8,5 @@ WORKDIR /opt/web-demo
 
 COPY . .
 
-RUN npm install
 
-ENTRYPOINT [ "node", "server.js" ]
+ENTRYPOINT [ "./run.sh" ]
