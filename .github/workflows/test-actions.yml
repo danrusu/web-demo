@@ -13,9 +13,6 @@ jobs:
 
       - name: Start Web Server 
         uses: ./
-        with:
-          ports: 
-            1111:1111
 
       - name: Start nginx
         uses: ./nginx/
