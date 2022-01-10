@@ -1,74 +1,25 @@
 version: '3.7'
 
 services:
-  web-1:
+  web:
     build:
       context: .
-    image: web-demo
-    networks:
-      - net-1
     ports:
       - 1111
 
-  nginx-1:
-    build:
-      context: ./nginx
-    networks:
-      - net-1
-    ports:
-      - 443
-    depends_on:
-      - web-1
-    links:
-      - 'web-1:web'
-
-  cypress-1:
-    build:
-      context: .
-      dockerfile: CypressDockerfile 
-    depends_on:
-      - nginx-1
-    networks:
-      - net-1
-    links:
-      - 'nginx-1:nginx'
-
-######################################
-
-  nginx-2:
+  nginx:
     build:
       context: ./nginx
     ports:
       - 443
-    networks:
-      - net-2
     depends_on:
-      - web-2
-    links:
-      - 'web-2:web'
-
-  web-2:
+      - web
+    
+  cypress:
     build:
       context: .
-    image: web-demo
-    ports:
-      - 1111
-    networks:
-      - net-2
-
-  cypress-2:
-    build:
-      context: .
-      dockerfile: CypressDockerfile 
+      dockerfile: cypress/Dockerfile 
     depends_on:
-      - nginx-2 
-    networks:
-      - net-2
-    links:
-      - 'nginx-2:nginx'
-
-networks:
-  net-1:
-    driver: bridge
-  net-2:
-    driver: bridge
+      - nginx
+    command: --browser chrome
+    

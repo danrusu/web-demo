@@ -5,9 +5,9 @@ git clone https://github.com/danrusu/web-demo.git
 
 cd web-demo
 
-docker-compose build
+docker-compose run cypress-1
 
-docker-compose up
+docker-compose run cypress-2
 
-docker-compose down
+docker-compose down --remove-orphans
 ```

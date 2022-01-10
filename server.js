@@ -11,7 +11,7 @@ app.use(express.static('public'));
 const serveFileFromRoot = (res, relativePath) =>
   res.sendFile(path.join(`${__dirname}/${relativePath}`));
 
-const serveHome = (_, res) => serveFileFromRoot(res, 'index.html');
+const serveHome = (_, res) => serveFileFromRoot(res, `index.html`);
 
 // routes
 app.get('/', serveHome);
